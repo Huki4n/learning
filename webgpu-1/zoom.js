@@ -1,7 +1,6 @@
 export class Zoom {
-  constructor() {
+  constructor(canvas) {
     this.scale = 1;
-    document.addEventListener("wheel", this.zoom.bind(this));
   }
 
   zoom(event) {

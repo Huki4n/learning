@@ -54,9 +54,17 @@ let vertices = new Float32Array([
 /* eslint-enable array-element-newline, @stylistic/array-element-newline */
 
 async function main() {
+  const canvas = document.querySelector("canvas");
   const zoom = new Zoom();
 
-  const canvas = document.querySelector("canvas");
+  canvas.addEventListener(
+    "wheel",
+    (event) => {
+      event.preventDefault();
+      zoom.zoom(event);
+    },
+    { passive: false },
+  );
 
   // WebGPU device initialization
   if (!navigator.gpu) {
@@ -69,11 +77,6 @@ async function main() {
   }
 
   const device = await adapter.requestDevice();
-
-  for (let i = 0; i < vertices.length; i += 2) {
-    vertices[i] += 0.5; // X
-    vertices[i + 1] += 0.2; // Y
-  }
 
   // Canvas configuration
   const context = canvas.getContext("webgpu");
